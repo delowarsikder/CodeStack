@@ -14,7 +14,6 @@ typedef long long ll;
 #define sc1(a) scanf("%lld", &a)
 #define sc2(a, b) scanf("%lld %lld", &a, &b)
 #define sc3(a, b, c) scanf("%lld %lld %lld", &a, &b, &c)
-
 #define srt(v) sort(v.begin(), v.end())
 #define rev(v) reverse(v.begin(), v.end())
 #define pb(a) push_back(a)
@@ -31,11 +30,33 @@ void print(vector<ll> arr)
   cout << endl;
 }
 
-void Swap(ll *a, ll *b)
+ll partition(vector<ll> &arr, ll left, ll right)
 {
-  ll temp = *a;
-  *a = *b;
-  *b = temp;
+  ll partitionIndex = left;
+  ll pivot = arr[right];
+  ll pivotIndex = right;
+
+  for (ll i = left; i < right; i++)
+  {
+    if (arr[i] <= pivot)
+    {
+      swap(arr[i], arr[partitionIndex]);
+      partitionIndex++;
+    }
+  }
+  swap(arr[pivotIndex], arr[partitionIndex]);
+  return partitionIndex;
+}
+
+void quickSort(vector<ll> &arr, ll left, ll right)
+{
+  if (left >= right)
+  {
+    return;
+  }
+  ll pivot = partition(arr, left, right);
+  quickSort(arr, left, pivot - 1);
+  quickSort(arr, pivot + 1, right);
 }
 
 int main()
@@ -51,26 +72,8 @@ int main()
   }
   cout << "Print before sort " << endl;
   print(arr);
-
-  for (int i = 0; i < n - 2; i++)
-  {
-    bool sorted = true;
-    for (int j = 0; j < n - i - 1; j++)
-    {
-      if (arr[j] > arr[j + 1])
-      {
-        Swap(&arr[j], &arr[j + 1]);
-        sorted = false;
-      }
-    }
-    if (sorted)
-    {
-      break;
-    }
-  }
-
+  quickSort(arr, 0, arr.size() - 1);
   cout << "print after sort" << endl;
   print(arr);
-
   return 0;
 }

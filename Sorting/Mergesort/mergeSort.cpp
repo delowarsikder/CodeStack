@@ -24,27 +24,65 @@ typedef pair<ll, ll> pll;
 
 void print(vector<ll> arr)
 {
-  for (int i = 0; i < arr.size(); i++)
+  for (ll i = 0; i < arr.size(); i++)
   {
     cout << arr[i] << " ";
   }
   cout << endl;
 }
 
-void Swap(ll *a, ll *b)
+void merge(vector<ll> &arr, ll left, ll mid, ll right)
 {
-  ll temp = *a;
-  *a = *b;
-  *b = temp;
+  int i = left, j = mid + 1;
+  vector<ll> tempArr;
+  while (i <= mid && j < right)
+  {
+    if (arr[i] < arr[j])
+    {
+      tempArr.pb(arr[i]);
+      i++;
+    }
+    else
+    {
+      tempArr.pb(arr[j]);
+      j++;
+    }
+  }
+  while (i <= mid)
+  {
+    tempArr.pb(arr[i]);
+    i++;
+  }
+  while (j < right)
+  {
+    tempArr.pb(arr[j]);
+    j++;
+  }
+  for(int i=left;i<right;i++){
+    arr[i]=tempArr[i-left];
+  }
+}
+
+void mergeSort(vector<ll> &arr, ll left, ll right)
+{
+  if (left >= right)
+  {
+    return;
+  }
+  ll mid = left + (right - left) / 2;
+  mergeSort(arr, left, mid);
+  mergeSort(arr, mid + 1, right);
+  merge(arr, left, mid, right);
 }
 
 int main()
 {
+  FASTIO;
   freopen("input.txt", "r", stdin);
   ll n, temp;
   vector<ll> arr;
   cin >> n;
-  for (int i = 0; i < n; i++)
+  for (ll i = 0; i < n; i++)
   {
     cin >> temp;
     arr.pb(temp);
@@ -52,22 +90,8 @@ int main()
   cout << "Print before sort " << endl;
   print(arr);
 
-  for (int i = 0; i < n - 2; i++)
-  {
-    bool sorted = true;
-    for (int j = 0; j < n - i - 1; j++)
-    {
-      if (arr[j] > arr[j + 1])
-      {
-        Swap(&arr[j], &arr[j + 1]);
-        sorted = false;
-      }
-    }
-    if (sorted)
-    {
-      break;
-    }
-  }
+  // merge sort
+  mergeSort(arr, 0, arr.size());
 
   cout << "print after sort" << endl;
   print(arr);

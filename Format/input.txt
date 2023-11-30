@@ -1,0 +1,4 @@
+info of students
+MRX 10 CSE
+MRY 20 EEE
+MRZ 30 ECE

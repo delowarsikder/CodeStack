@@ -54,19 +54,15 @@ int main()
 
   for (int i = 0; i < n - 2; i++)
   {
-    bool sorted = true;
-    for (int j = 0; j < n - i - 1; j++)
+    int iMin = i;
+    for (int j = i + 1; j < n; j++)
     {
-      if (arr[j] > arr[j + 1])
+      if (arr[iMin] > arr[j])
       {
-        Swap(&arr[j], &arr[j + 1]);
-        sorted = false;
+        iMin = j;
       }
     }
-    if (sorted)
-    {
-      break;
-    }
+    Swap(&arr[i], &arr[iMin]); // swap current min vs assumption min
   }
 
   cout << "print after sort" << endl;

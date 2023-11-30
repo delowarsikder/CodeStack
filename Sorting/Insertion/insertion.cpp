@@ -31,13 +31,6 @@ void print(vector<ll> arr)
   cout << endl;
 }
 
-void Swap(ll *a, ll *b)
-{
-  ll temp = *a;
-  *a = *b;
-  *b = temp;
-}
-
 int main()
 {
   freopen("input.txt", "r", stdin);
@@ -52,21 +45,16 @@ int main()
   cout << "Print before sort " << endl;
   print(arr);
 
-  for (int i = 0; i < n - 2; i++)
+  for (int i = 1; i < n; i++)
   {
-    bool sorted = true;
-    for (int j = 0; j < n - i - 1; j++)
+    int value = arr[i];
+    int j = i - 1;
+    while (j >= 0 &&  arr[j] > value)
     {
-      if (arr[j] > arr[j + 1])
-      {
-        Swap(&arr[j], &arr[j + 1]);
-        sorted = false;
-      }
+      arr[j+1] = arr[j];
+      j--;
     }
-    if (sorted)
-    {
-      break;
-    }
+    arr[j+1] = value;
   }
 
   cout << "print after sort" << endl;
