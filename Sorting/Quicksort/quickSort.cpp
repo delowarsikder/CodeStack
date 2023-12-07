@@ -32,13 +32,12 @@ void print(vector<ll> arr)
 
 ll partition(vector<ll> &arr, ll left, ll right)
 {
-  ll partitionIndex = left;
-  ll pivot = arr[right];
   ll pivotIndex = right;
-
-  for (ll i = left; i < right; i++)
+  ll pivot = arr[right];
+  ll partitionIndex = left;
+  for (int i = left; i < right; i++)
   {
-    if (arr[i] <= pivot)
+    if (arr[i] < pivot)
     {
       swap(arr[i], arr[partitionIndex]);
       partitionIndex++;
@@ -54,9 +53,9 @@ void quickSort(vector<ll> &arr, ll left, ll right)
   {
     return;
   }
-  ll pivot = partition(arr, left, right);
-  quickSort(arr, left, pivot - 1);
-  quickSort(arr, pivot + 1, right);
+  ll pivotPoint = partition(arr, left, right);
+  quickSort(arr, left, pivotPoint - 1);
+  quickSort(arr, pivotPoint + 1, right);
 }
 
 int main()
